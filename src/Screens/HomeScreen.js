@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import { GenreCard } from "../Components";
 
 function HomeScreen() {
+    const genreList = ['Fiction', 'Philosophy', 'Drama', 'History', 'Humour', 'Adventure', 'Politics'];
+
     return (
         <>
             <div className="section bg-pattern">
@@ -17,96 +20,9 @@ function HomeScreen() {
             <div className="section bg-light-grey">
                 <div className="container pt-3 pb-5">
                     <div className="row genres-row mt-4">
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-                            {/* genre card */}
-                            <div className="card genre-card d-flex flex-row justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <div className="align-self-middle me-2"><img src='./assets/images/Fiction.svg' className="genre-card-icon" /></div>
-                                    <div><h5 className="montserrat-semibold uppercase">Fiction</h5></div>
-                                </div>
-                                <div>
-                                    <a href="#" className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></a>
-                                </div>
-                            </div>
-                        </div>
+                        {genreList.map((genre, index) => {
+                            return <GenreCard key={index} genre={genre} />;
+                        })}
                     </div>
                 </div>
             </div>
