@@ -7,7 +7,6 @@ function BookCard(props) {
     const [pdfFile, setPdfFile] = useState('');
     const [textFile, setTextFile] = useState('');
 
-
     function getFileFormatURLs() {
         Object.keys(fileFormats).forEach(key => {
             if (key == 'image/jpeg') {

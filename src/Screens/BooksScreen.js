@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BookCard } from '../Components';
 import { getBooks } from '../Actions';
 
 function BooksScreen(props) {
     const dispatch = useDispatch();
+    const location = useLocation();
     const reduxState = useSelector(state => state.data);
     const { books_data, books_count, loader, next } = reduxState;
-    const [genreFilter, setGenreFilter] = useState(window.location.href
-        .split("/")
-        .slice(-1)[0]
-        .split("-")[0]);
+    const [genreFilter, setGenreFilter] = useState(location.pathname.split('/').slice(-1)[0]);
     const [titleAuthorFilter, setTitleAuthorFilter] = useState('');
     const [nextPageNumber, setNextPageNumber] = useState('');
-
     console.log("Next in Screen:::::::::: ", next);
     console.log("Next Page Number in Screen:::::::::: ", nextPageNumber);
+    console.log("Location::::::::: ", location.pathname.split('/').slice(-1)[0]);
 
     const renderLoader = () => {
         return (
@@ -40,27 +38,6 @@ function BooksScreen(props) {
             }))
         }
     };
-
-    // const readImageFromURL = () => {
-    //     console.log("Read Image from URL: ", )
-    //     JSZipUtils.getBinaryContent("http://www.gutenberg.org/files/1342/1342-0.zip", function (err, data) {
-    //         if (err) {
-    //            throw err;
-    //         }
-    //         const jsZip = new JSZip();
-    //         jsZip.loadAsync(data).then(function (zip) {
-    //            Object.keys(zip.files).forEach(function (filename) {
-    //               zip.files[filename].async("base64").then(function (fileData) {
-    //                  const image = document.createElement("img");
-    //                  image.src = "data:image/*;base64," + fileData;
-    //                  const unziped = document.querySelector(".unziped-container");
-    //                  unziped.appendChild(image);
-    //               });
-    //            });
-    //         });
-    //      });
-    // }
-
 
     const handleScroll = (e) => {
         console.log("top: " + e.target.documentElement.scrollTop + "  height: " + window.innerHeight + "  scrollheight: " + e.target.documentElement.scrollHeight)
@@ -87,6 +64,7 @@ function BooksScreen(props) {
         }
         window.addEventListener('scroll', handleScroll);
     }, [genreFilter]);
+
     return (
         <>
             <div className="section bg-white pt-5">
@@ -132,7 +110,6 @@ function BooksScreen(props) {
                     }
                 </div>
             </div>
-
         </>
     )
 }

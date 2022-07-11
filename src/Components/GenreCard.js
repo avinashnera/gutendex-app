@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from 'react';
 
 function GenreCard(props) {
     const { genre } = props;
@@ -11,7 +12,10 @@ function GenreCard(props) {
                     <div><h5 className="montserrat-semibold uppercase">{genre}</h5></div>
                 </div>
                 <div>
-                    <Link to={"/" + genre} className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></Link>
+                    {/* <Link to={"/" + genre} className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></Link> */}
+                    <Link to={{
+                        pathname: '/Fiction'
+                    }} className="go-to-genre-button"><img src='./assets/images/Next.svg' className="go-to-genre-icon" /></Link>
                 </div>
             </div>
         </div>
