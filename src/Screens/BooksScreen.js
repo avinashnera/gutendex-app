@@ -8,13 +8,9 @@ function BooksScreen(props) {
     const dispatch = useDispatch();
     const location = useLocation();
     const reduxState = useSelector(state => state.data);
-    const { books_data, books_count, loader, next } = reduxState;
+    const { books_data, books_count, loader } = reduxState;
     const [genreFilter, setGenreFilter] = useState(location.pathname.split('/').slice(-1)[0]);
     const [titleAuthorFilter, setTitleAuthorFilter] = useState('');
-    const [nextPageNumber, setNextPageNumber] = useState('');
-    console.log("Next in Screen:::::::::: ", next);
-    console.log("Next Page Number in Screen:::::::::: ", nextPageNumber);
-    console.log("Location::::::::: ", location.pathname.split('/').slice(-1)[0]);
 
     const renderLoader = () => {
         return (
@@ -30,39 +26,24 @@ function BooksScreen(props) {
 
     const handleKeypress = (e) => {
         if (e.charCode === 13) {
-            console.log("Next value before function call:::::::::: ", next);
             dispatch(getBooks({
                 genreFilter: genreFilter,
-                titleAuthorFilter: e.target.value,
-                next: 0
+                titleAuthorFilter: e.target.value
             }))
         }
     };
 
-    const handleScroll = (e) => {
-        console.log("top: " + e.target.documentElement.scrollTop + "  height: " + window.innerHeight + "  scrollheight: " + e.target.documentElement.scrollHeight)
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 == e.target.documentElement.scrollHeight) {
-            console.log("At the bottom of the page:::::::::: ", next);
-            getData();
-        }
-    }
-
     const getData = () => {
-        console.log("Inside getData:::::::::: ", next);
         dispatch(getBooks({
             genreFilter: genreFilter,
-            titleAuthorFilter: titleAuthorFilter,
-            next: next
+            titleAuthorFilter: titleAuthorFilter
         }))
     }
 
     useEffect(() => {
-        console.log("UseEffect:::::::::: ")
         if (genreFilter != "") {
-            console.log("Use Effect getData function is being called::::::::: ")
             getData();
         }
-        window.addEventListener('scroll', handleScroll);
     }, [genreFilter]);
 
     return (
