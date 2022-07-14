@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from "react-router-dom";
-import $ from 'jquery';
 import { BookCard } from '../Components';
 import { getBooks } from '../Actions';
 import './css/BooksScreen.css';
@@ -13,7 +12,7 @@ function BooksScreen(props) {
     const { books_data, books_count, loader } = reduxState;
     const [titleAuthorFilter, setTitleAuthorFilter] = useState('');
 
-
+    //displays the loader in place of the main content section 
     const renderLoader = () => {
         console.log("IN LOADER FUNCTION::::::::::");
         return (
@@ -27,6 +26,7 @@ function BooksScreen(props) {
         )
     }
 
+    //triggers the api when user enters after typing in the search field
     const handleKeypress = (e) => {
         if (e.charCode === 13) {
             dispatch(getBooks({
@@ -36,6 +36,7 @@ function BooksScreen(props) {
         }
     };
 
+    //clears the search input field on click of the clear button in the search field
     const clearSearchInput = () => {
         console.log("CLEAR BUTTON CLICK EVENT::::::::::");
         document.getElementById('searchInput').value = "";
@@ -44,6 +45,7 @@ function BooksScreen(props) {
         getData();
     }
 
+    //triggers the api
     const getData = () => {
         console.log("IN GET DATA FUNCTION::::::::::", genre);
         dispatch(getBooks({
@@ -51,6 +53,8 @@ function BooksScreen(props) {
             titleAuthorFilter: titleAuthorFilter
         }))
     }
+
+    //Renders the clear button in the search field on typing any text in the search field
     const renderClearButton = () => {
         document.getElementById('searchInput').addEventListener('input', (e) => {
             console.log("SEARCH INPUT VALUE:::::::::: ", e.currentTarget.value);
@@ -66,9 +70,7 @@ function BooksScreen(props) {
 
     useEffect(() => {
         console.log("IN USEEFFECT FUNCTION::::::::::")
-        // if (genre != "") {
         getData();
-        // }
         renderClearButton();
     }, [genre]);
 
@@ -105,6 +107,7 @@ function BooksScreen(props) {
                 <div className="container pb-5">
                     {!loader ?
                         <div className="row books-row">
+                            {/* looping through the books data and displaying it on the screen if books are available else displays the error message.*/}
                             {books_count ?
                                 books_data.map((item, index) => {
                                     return <BookCard key={index} fileFormats={item.formats} title={item.title} author={item.authors} />
@@ -114,6 +117,7 @@ function BooksScreen(props) {
                             }
                         </div>
                         :
+                        //displays the loader until the api response.
                         renderLoader()
                     }
                 </div>

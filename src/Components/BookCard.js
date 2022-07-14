@@ -8,7 +8,8 @@ function BookCard(props) {
     const [ pdfFile, setPdfFile ] = useState('');
     const [ textFile, setTextFile ] = useState('');
 
-    function getFileFormatURLs() {
+    // setting image, HTML, PDF and TXT file URLs from fileFormats
+    function setFileFormatURLs() {
         Object.keys(fileFormats).forEach(key => {
             if (key == 'image/jpeg') {
                 setCoverImage(fileFormats[key]);
@@ -25,6 +26,7 @@ function BookCard(props) {
         });
     }
 
+    // Opens file in the order of preference and availability in a new tab, else shows alert with message.
     function openFile() {
         if (htmlFile != '') {
             window.open(htmlFile, '_blank', 'noopener,noreferrer');
@@ -38,7 +40,7 @@ function BookCard(props) {
     }
 
     useEffect(() => {
-        getFileFormatURLs();
+        setFileFormatURLs();
     }, []);
 
     return (
@@ -49,7 +51,10 @@ function BookCard(props) {
                         <img src={coverImage} className="img-fluid" />
                     </div>
                 </a>
-                <h6 className="book-name montserrat-semibold uppercase">{title}</h6>
+                <div className="title-section">
+                    <h6 className="book-name montserrat-semibold uppercase text">{title}</h6>
+                    <span className="tooltiptext montserrat-medium ">{title}</span>
+                </div>
                 <p className="book-author montserrat-semibold medium-grey">{author.length > 0 ? author[0].name : "Anonymous"}</p>
             </div>
         </div>
