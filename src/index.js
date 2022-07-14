@@ -11,7 +11,6 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from './Reducers';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
 const store = createStore(reducer, {}, applyMiddleware(thunkMiddleware));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,13 +20,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/" exact element={<HomeScreen />}></Route>
-        <Route path="/Fiction" element={<BooksScreen />}></Route>
-        <Route path="/Philosophy" element={<BooksScreen />}></Route>
-        <Route path="/Drama" element={<BooksScreen />}></Route>
-        <Route path="/History" element={<BooksScreen />}></Route>
-        <Route path="/Humour" element={<BooksScreen />}></Route>
-        <Route path="/Adventure" element={<BooksScreen />}></Route>
-        <Route path="/Politics" element={<BooksScreen />}></Route>
+        <Route path="/books/:genre" element={<BooksScreen />}></Route>
       </Routes>
     </Router>
   </Provider>
