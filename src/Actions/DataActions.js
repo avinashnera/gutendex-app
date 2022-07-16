@@ -10,10 +10,6 @@ export const getBooks = (books_data,genre,titleAuthorFilter,pageNumber,next) => 
     */
     const url = `http://skunkworks.ignitesol.com:8000/books?mime_type=image%2Fjpeg&topic=${genre}${(pageNumber>1 ? `&page=${pageNumber}` : '')}${(titleAuthorFilter ? `&search=${encodeURIComponent(titleAuthorFilter.trim())}` : "")}`;
 
-    console.log("REQUEST URL:::::::::: ", url);
-    console.log("DATA.PAGE_NUMBER:::::::::: ", pageNumber);
-    console.log("DATA.BOOKS_DATA:::::::::: ", books_data.length);
-    console.log("DATA.NEXT:::::::::: ", next);
     return dispatch => {
         // loader is rendered
         dispatch({
@@ -22,17 +18,11 @@ export const getBooks = (books_data,genre,titleAuthorFilter,pageNumber,next) => 
         })
         axios.get(url)
             .then((response) => {
-                // let books_data =[...data.books_data, ...response.data.results];
                 let result = {
                     next: response.data.next,
                     books_data: [...books_data, ...response.data.results]
-                    // books_data: response.data.results
                 }
-                
-                console.log("RESPONSE_BOOKS_DATA:::::::::: ", response.data.results.length);
-                console.log("TOTAL_BOOKS_DATA:::::::::: ", result.books_data.length);
-                console.log("RESPONSE_DATA:::::::::: ", response.data);
-                // console.log("RESULT:::::::::: ", result.books_data.length);
+
                 // api response books data is set
                 dispatch({
                     type: GET_DATA,
@@ -50,9 +40,7 @@ export const getBooks = (books_data,genre,titleAuthorFilter,pageNumber,next) => 
 }
 
 export const resetState = (navigate) => {
-    // console.log("RESET STATE DATA::::::::::",data);
     if(navigate) {
-        // console.log("DATA.NAVIGATE IS TRUE::::::::::");
         navigate('/');
     }
     return dispatch => {
@@ -60,5 +48,4 @@ export const resetState = (navigate) => {
             type: RESET
         })
     }
-    
 }

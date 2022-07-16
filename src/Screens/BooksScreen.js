@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { BookCard } from '../Components';
 import { getBooks, resetState } from '../Actions';
 import './css/BooksScreen.css';
@@ -13,11 +13,9 @@ function BooksScreen(props) {
     const { books_data, loader, next } = reduxState;
     const [titleAuthorFilter, setTitleAuthorFilter] = useState('');
     const [pageNumber, setPageNumber] = useState(1);
-    console.log("NEXT1::::::::::", next);
 
     //displays the loader in place of the main content section 
     const renderLoader = () => {
-        // console.log("IN LOADER FUNCTION::::::::::");
         return (
             <div className="row">
                 <div className="col-md-12 text-center">
@@ -32,7 +30,6 @@ function BooksScreen(props) {
     //triggers the api when user enters after typing in the search field
     const handleKeypress = (e) => {
         if (e.charCode === 13) {
-            // console.log("IN HANDLE KEYPRESS::::::::::")
             setPageNumber(1)
             setTitleAuthorFilter(e.target.value)
             dispatch(resetState(''))
@@ -41,7 +38,6 @@ function BooksScreen(props) {
 
     //clears the search input field on click of the clear button in the search field
     const clearSearchInput = () => {
-        console.log("CLEAR BUTTON CLICK EVENT::::::::::");
         document.getElementById('searchInput').value = "";
         document.getElementById('clearButton').style.display = 'none';
         document.getElementById('clearButton').style.zIndex = '0';
@@ -53,22 +49,14 @@ function BooksScreen(props) {
     //triggers the getBooks api
     const getData = () => {
         console.log("IN GET DATA FUNCTION::::::::::", next, pageNumber);
-        if(next != null) {
-            // dispatch(getBooks({
-            //     books_data: books_data,
-            //     genre: genre,
-            //     titleAuthorFilter: titleAuthorFilter,
-            //     page_number: pageNumber,
-            //     next: next
-            // }))
-            dispatch(getBooks(books_data,genre,titleAuthorFilter,pageNumber,next))
+        if (next != null) {
+            dispatch(getBooks(books_data, genre, titleAuthorFilter, pageNumber, next))
         }
     }
 
     //Renders the clear button in the search field on typing any text in the search field
     const renderClearButton = () => {
         document.getElementById('searchInput').addEventListener('input', (e) => {
-            // console.log("SEARCH INPUT VALUE:::::::::: ", e.currentTarget.value);
             if (e.currentTarget.value != "") {
                 document.getElementById('clearButton').style.display = 'block';
                 document.getElementById('clearButton').style.zIndex = '99';
@@ -81,26 +69,21 @@ function BooksScreen(props) {
 
     //This function is called when the user scrolls and check if the user has reached the end of the page and if yes then sets the page number which triggers the getdata function that gets us the new books data.
     const handleScroll = () => {
-        console.log("HANDLE SCROLL FUNCTIONIS CALLED::::::::::",next);
         if (next != null) {
             if (
                 window.innerHeight + document.documentElement.scrollTop !==
                 document.documentElement.offsetHeight
             ) {
-                // console.log("IF IS TRUE::::::::::");
                 return;
             } else {
                 setPageNumber(pageNumber + 1);
                 // getData(pageNumber +1)
-                console.log("SET FETCHING TO TRUE::::::::::", titleAuthorFilter);
                 return;
             }
         }
     }
 
-    // console.log("NEXT2::::::::::", next);
     useEffect(() => {
-        // console.log("IN USEEFFECT FUNCTION::::::::::")
         getData();
         renderClearButton();
         // This part of code checks for browser back button press event and triggers the reset state action then navigates to the home screen.
@@ -113,7 +96,6 @@ function BooksScreen(props) {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [genre, pageNumber, titleAuthorFilter]);
-
 
     return (
         <>
@@ -153,12 +135,13 @@ function BooksScreen(props) {
                             books_data.map((item, index) => {
                                 return <BookCard key={index} fileFormats={item.formats} title={item.title} author={item.authors} />
                             })
-                            :
-                            ''
+                            : ''
                         }
-                        
+
+                        {/* Displays this message when there are no books available. */}
                         {books_data.length == 0 && next == null ? <h5 className="text-center">There are no books available.</h5> : ''}
 
+                        {/* displays this message when the user reaches the end of the search list */}
                         {books_data.length && next == null ? <h5 className="text-center">No more books available.</h5> : ''}
 
                         {/* displays the loader until the api response and we have more data to be displayed. */}
