@@ -1,19 +1,24 @@
-import { GET_DATA, LOADER } from '../Actions/ActionTypes';
+import { GET_DATA, RESET, LOADER } from '../Actions/ActionTypes';
 
 var INITIAL_STATE = {
     books_data: [],
-    books_count: '',
-    loader: false
+    loader: false,
+    next: 'next'
 }
 
 export default (state = INITIAL_STATE, action) => {
-
+    console.log("ACTION::::::::::",action);
     switch (action.type) {
         case GET_DATA:
-            return { ...state, books_data: action.payload.results, books_count: action.payload.count }
+            // console.log("PAYLOAD::::::::::", action.payload.next)
+            return { ...state, books_data: action.payload.books_data, next: action.payload.next }
             break;
         case LOADER:
             return { ...state, loader: action.payload }
+            break;
+        case RESET:
+            // console.log("RESET::::::::::", action.type)
+            return INITIAL_STATE;
             break;
         default:
             return state;
